@@ -1,9 +1,13 @@
 import express, { Request, Response } from 'express';
+import pool from './utils/db';
 
 const app = express();
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello world!');
+  pool.query('SELECT * FROM "products"').then((result) => {
+    // res.send(result.rows);
+    res.json(result.rows);
+  });
 });
 
 app.listen(5000, () => {
